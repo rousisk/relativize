@@ -1,8 +1,11 @@
 # Relativize
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/relativize`. To experiment with that code, run `bin/console` for an interactive prompt.
+Relativize is a simple way to ensure that you redirect to a string URL
+which is relative to your application and doesn't lead you to external
+domains.
 
-TODO: Delete this and the text above, and describe your gem
+It's meant to be used alongside Rails' `redirect_to`, sinatra's `redirect`
+or any other redirection mechanism.
 
 ## Installation
 
@@ -22,7 +25,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Relativize is a PORO that should be initialized with a URL and
+optionally a `default_url` to be returned in case of exceptions.
+
+    Relativize.new('https://example.com/path?query=yeap').call
+    # => /path?query=yeap
+
+    Relativize.new('/path?query=yeap').call
+    # => /path?query=yeap
+
+    Relativize.new('%invalid uri%', default_url: '/home').call
+    # => /home
+
+    Relativize.new('%invalid uri%').call
+    # => /
 
 ## Development
 
